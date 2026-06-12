@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="MyDoser — Frequency App. Tune into calm. Frequencies for sleep, focus and stress relief. Coming soon to the App Store.">
+<title>MyDoser — Tune into calm</title>
+<style>
+  :root {
+    --bg: #0B0B1A;
+    --grad-a: #4A00E0;
+    --grad-b: #8E2DE2;
+    --text: #EDEAF7;
+    --muted: rgba(237, 234, 247, 0.65);
+    --faint: rgba(237, 234, 247, 0.45);
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --card-border: rgba(255, 255, 255, 0.10);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  .glow {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(130px);
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .glow-1 { width: 560px; height: 560px; top: -200px; left: -160px; background: var(--grad-a); }
+  .glow-2 { width: 500px; height: 500px; top: 24%; right: -200px; background: var(--grad-b); }
+  .glow-3 { width: 440px; height: 440px; bottom: -180px; left: 20%; background: #2A0A6E; }
+  .wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 72px 20px 40px;
+  }
+  .hero { text-align: center; margin-bottom: 56px; }
+  .app-mark {
+    width: 84px; height: 84px;
+    margin: 0 auto 24px;
+    border-radius: 22px;
+    background: linear-gradient(135deg, var(--grad-a), var(--grad-b));
+    box-shadow: 0 16px 40px rgba(106, 17, 226, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.2rem;
+  }
+  .hero h1 {
+    font-size: clamp(2.6rem, 8vw, 4rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+    background: linear-gradient(100deg, #FFFFFF 15%, #C9B8FF 60%, #8E2DE2 110%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+  }
+  .hero .sub { font-size: 0.95rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #C9B8FF; margin-bottom: 20px; }
+  .hero .tagline { font-size: clamp(1.1rem, 3vw, 1.35rem); color: var(--muted); max-width: 46ch; margin: 0 auto 30px; }
+  .soon-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 26px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.98rem;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(142, 45, 226, 0.5);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 8px 28px rgba(106, 17, 226, 0.35);
+  }
+  .soon-badge .dot {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--grad-a), var(--grad-b));
+    box-shadow: 0 0 12px #8E2DE2;
+  }
+  h2.section {
+    font-size: clamp(1.4rem, 4vw, 1.8rem);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 16px;
+    margin-bottom: 56px;
+  }
+  .feature {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 24px 22px;
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.30);
+    transition: transform 0.18s ease, border-color 0.18s ease;
+  }
+  .feature:hover { transform: translateY(-3px); border-color: rgba(142, 45, 226, 0.45); }
+  .feature .icon {
+    width: 44px; height: 44px;
+    border-radius: 13px;
+    background: linear-gradient(135deg, var(--grad-a), var(--grad-b));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    margin-bottom: 14px;
+    box-shadow: 0 6px 18px rgba(106, 17, 226, 0.40);
+  }
+  .feature h3 { font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .feature p { font-size: 0.92rem; color: var(--muted); }
+  .cats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .cat {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 14px 16px;
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+  }
+  .cat .emoji { font-size: 1.3rem; }
+  .cat .name { font-weight: 600; color: var(--text); font-size: 0.98rem; }
+  .disclaimer {
+    text-align: center;
+    color: var(--faint);
+    font-size: 0.92rem;
+    max-width: 62ch;
+    margin: 0 auto 56px;
+    padding: 16px 20px;
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
+  .cta {
+    text-align: center;
+    background: linear-gradient(135deg, rgba(74, 0, 224, 0.25), rgba(142, 45, 226, 0.15));
+    border: 1px solid rgba(142, 45, 226, 0.40);
+    border-radius: 24px;
+    padding: 40px 24px;
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+  }
+  .cta h2 { font-size: clamp(1.3rem, 4vw, 1.7rem); font-weight: 800; color: #fff; margin-bottom: 8px; }
+  .cta p { color: var(--muted); margin-bottom: 20px; }
+  .email-btn {
+    display: inline-block;
+    padding: 14px 32px;
+    border-radius: 16px;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #fff !important;
+    background: linear-gradient(135deg, var(--grad-a), var(--grad-b));
+    box-shadow: 0 8px 24px rgba(106, 17, 226, 0.45);
+    text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .email-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(106, 17, 226, 0.60); text-decoration: none; }
+  a { color: #B08CFF; text-decoration: none; }
+  a:hover { color: #D4BEFF; text-decoration: underline; }
+  footer {
+    margin-top: 48px;
+    padding-top: 28px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    text-align: center;
+    color: var(--faint);
+    font-size: 0.9rem;
+  }
+  footer .brand { font-weight: 700; color: var(--muted); margin-bottom: 6px; }
+  footer .links { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: center; }
+  @media (max-width: 600px) {
+    .wrap { padding: 52px 16px 32px; }
+    .cta { padding: 30px 18px; }
+  }
+</style>
+</head>
+<body>
+<div class="glow glow-1"></div>
+<div class="glow glow-2"></div>
+<div class="glow glow-3"></div>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="app-mark" aria-hidden="true">〰️</div>
+    <h1>MyDoser</h1>
+    <div class="sub">Frequency App</div>
+    <p class="tagline">Tune into calm. Frequencies for sleep, focus and stress relief.</p>
+    <span class="soon-badge"><span class="dot"></span>Coming soon to the App Store</span>
+  </section>
+
+  <h2 class="section">Everything you need to unwind</h2>
+  <section class="features">
+    <div class="feature">
+      <div class="icon" aria-hidden="true">🗂️</div>
+      <h3>8 Curated Categories</h3>
+      <p>From deep sleep to creative flow — every mood has a home, beautifully organized.</p>
+    </div>
+    <div class="feature">
+      <div class="icon" aria-hidden="true">🎼</div>
+      <h3>60+ Frequencies</h3>
+      <p>A rich library of carefully crafted soundscapes, with a free frequency to enjoy daily.</p>
+    </div>
+    <div class="feature">
+      <div class="icon" aria-hidden="true">🎧</div>
+      <h3>Binaural Beats &amp; Solfeggio Tones</h3>
+      <p>Precision-generated binaural beats (headphones on!) and classic solfeggio tones.</p>
+    </div>
+    <div class="feature">
+      <div class="icon" aria-hidden="true">🌙</div>
+      <h3>Sleep Timer</h3>
+      <p>Drift off worry-free — playback fades out gently and stops when you choose.</p>
+    </div>
+    <div class="feature">
+      <div class="icon" aria-hidden="true">📱</div>
+      <h3>Background Play</h3>
+      <p>Lock your screen, switch apps — your frequency keeps flowing uninterrupted.</p>
+    </div>
+    <div class="feature">
+      <div class="icon" aria-hidden="true">🔒</div>
+      <h3>Private by Design</h3>
+      <p>No account, no ads, no tracking. Your preferences stay on your device.</p>
+    </div>
+  </section>
+
+  <h2 class="section">Eight moods, one app</h2>
+  <section class="cats">
+    <div class="cat"><span class="emoji" aria-hidden="true">😴</span><span class="name">Sleep</span></div>
+    <div class="cat"><span class="emoji" aria-hidden="true">🌿</span><span class="name">Stress Relief</span></div>
+    <div class="cat"><span class="emoji" aria-hidden="true">🎯</span><span class="name">Focus</span></div>
+    <div class="cat"><span class="emoji" aria-hidden="true">🧘</span><span class="name">Meditation</span></div>
+    <div class="cat"><span class="emoji" aria-hidden="true">⚡️</span><span class="name">Energy</span></div>
+    <div class="cat"><span class="emoji" aria-hidden="true">✨</span><span class="name">Healing Tones</span></div>
+    <div class="cat"><span class="emoji" aria-hidden="true">🕊️</span><span class="name">Anxiety Ease</span></div>
+    <div class="cat"><span class="emoji" aria-hidden="true">🎨</span><span class="name">Creativity</span></div>
+  </section>
+
+  <p class="disclaimer">MyDoser is designed for relaxation and general wellness. It makes no medical claims and is not a substitute for professional medical care. If you have epilepsy, a seizure history, or a hearing condition, please consult a doctor before listening.</p>
+
+  <section class="cta">
+    <h2>Be the first to know</h2>
+    <p>MyDoser is coming soon to the App Store. Questions, ideas, or just want to say hi?</p>
+    <a class="email-btn" href="mailto:etsyhmet@gmail.com?subject=MyDoser">Get in touch</a>
+  </section>
+
+  <footer>
+    <div class="brand">MyDoser — Frequency App</div>
+    <div>Contact: <a href="mailto:etsyhmet@gmail.com">etsyhmet@gmail.com</a></div>
+    <div class="links">
+      <a href="https://mericdegirmencioglu.github.io/mydoser-privacy-policy/">Privacy Policy</a>
+      <a href="https://mericdegirmencioglu.github.io/mydoser-terms-of-use/">Terms of Use</a>
+      <a href="https://mericdegirmencioglu.github.io/mydoser-contact-support/">Support</a>
+    </div>
+  </footer>
+</main>
+</body>
+</html>
